@@ -17,8 +17,8 @@ const winMatrix = [
   [2, 4, 6]
 ];
 
+// Set up the game board in memory
 var origState = Array.from(Array(9).keys());
-var game = true;
 
 // Event listeners
 squares.forEach(e => {
@@ -72,11 +72,3 @@ function gameOver(gameWon) {
       gameWon.player == humanMark ? "red" : "blue";
   }
 }
-
-// function humanTurn(square) {
-//   computer.style.display = 'none';
-//   reset.style.gridColumn = 'span 3';
-
-//   square.target.innerText = humanMark;
-//   console.log(square.target.id);
-// }
