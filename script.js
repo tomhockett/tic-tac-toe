@@ -22,7 +22,7 @@ var game = true;
 
 // Event listeners
 squares.forEach(e => {
-	e.addEventListener('click', humanTurn);
+	e.addEventListener('click', handleClick);
 })
 
 reset.addEventListener('click', resetBoard);
@@ -37,9 +37,18 @@ function resetBoard() {
   })
 }
 
-function humanTurn(e) {
-  computer.style.display = 'none';
-  reset.style.gridColumn = 'span 3';
-
-  e.target.innerText = humanMark;
+function handleClick(square) {
+  turn(square.target.id, humanMark)
 }
+
+function turn(squareId, player) {
+  document.getElementById(squareId).innerText = player;
+}
+
+// function humanTurn(square) {
+//   computer.style.display = 'none';
+//   reset.style.gridColumn = 'span 3';
+
+//   square.target.innerText = humanMark;
+//   console.log(square.target.id);
+// }
