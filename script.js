@@ -21,9 +21,9 @@ const winMatrix = [
 var origState = Array.from(Array(9).keys());
 
 // Event listeners
-squares.forEach(e => {
+for(let e of squares) {
 	e.addEventListener('click', handleClick);
-})
+}
 
 reset.addEventListener('click', resetBoard);
 
@@ -33,10 +33,10 @@ function resetBoard() {
   computer.style.display = '';
   origState = Array.from(Array(9).keys());
   
-  squares.forEach(e => {
+  for(let e of squares) {
     e.innerText = '';
     e.style.backgroundColor = 'white';
-  })
+  }
 }
 
 function handleClick(square) {
