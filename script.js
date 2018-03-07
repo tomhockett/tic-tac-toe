@@ -18,7 +18,7 @@ const winMatrix = [
 ];
 
 // Set up the game board in memory
-var origState = Array.from(Array(9).keys());
+var oBoard = Array.from(Array(9).keys());
 
 // Event listeners
 for(let e of squares) {
@@ -31,7 +31,7 @@ reset.addEventListener('click', resetBoard);
 function resetBoard() {
   reset.style.gridColumn = '';
   computer.style.display = '';
-  origState = Array.from(Array(9).keys());
+  oBoard = Array.from(Array(9).keys());
   
   for(let e of squares) {
     e.innerText = '';
@@ -46,11 +46,12 @@ function handleClick(square) {
 function turn(squareId, player) {
   computer.style.display = 'none';
   reset.style.gridColumn = 'span 3';
-  origState[squareId] = player;
+  oBoard[squareId] = player;
   
   document.getElementById(squareId).innerText = player;
-  let gameWon = checkWin(origState, player);
+  let gameWon = checkWin(oBoard, player);
   if (gameWon) gameOver(gameWon);
+  checkTie(oBoard);
 }
 
 function checkWin(board, player) {
@@ -70,5 +71,15 @@ function gameOver(gameWon) {
   for (let index of winMatrix[gameWon.index]) {
     document.getElementById(index).style.backgroundColor = 
       gameWon.player == humanMark ? "red" : "blue";
+  }
+}
+
+function checkTie(board) {
+  let emptySquares = board.filter(s => typeof s == 'number');
+  if(emptySquares.length == 0) {
+    for(let i of squares) {
+      i.style.backgroundColor = 'green';
+    }
+    console.log("It's a tie!");
   }
 }
