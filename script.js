@@ -42,7 +42,12 @@ function resetBoard() {
 }
 
 function handleClick(square) {
-  turn(square.target.id, humanMark)
+  if (typeof oBoard[square.target.id] == 'number') {
+    turn(square.target.id, humanMark)
+    if (!checkWin(oBoard, humanMark) && !checkTie()) {
+      turn(bestPlay(), compMark)
+    }
+  }
 }
 
 function turn(squareId, player) {
@@ -74,16 +79,31 @@ function gameOver(gameWon) {
     document.getElementById(index).style.backgroundColor = 
       gameWon.player == humanMark ? "red" : "blue";
   }
+  declareWinner(gameWon.player == humanMark ? "You Win!" : "You lose!")
   
   squares.forEach(x => x.removeEventListener('click', handleClick));
 }
 
 function checkTie(board) {
-  let emptySquares = board.filter(s => typeof s == 'number');
-  if(emptySquares.length == 0) {
+  if(emptySquares().length == 0) {
     for(let i of squares) {
       i.style.backgroundColor = 'green';
+      i.removeEventListener('click', handleClick)
     }
-    console.log("It's a tie!");
+    declareWinner("It's a tie!")
+    return true;
   }
+  return false;
+}
+
+function emptySquares() {
+  return oBoard.filter(s => typeof s == 'number')
+}
+
+function bestPlay() {
+  return emptySquares()[0]
+}
+
+function declareWinner(whoWon) {
+  console.log(whoWon)
 }
