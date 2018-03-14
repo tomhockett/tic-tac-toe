@@ -37,6 +37,8 @@ function resetBoard() {
     e.innerText = '';
     e.style.backgroundColor = 'white';
   }
+
+  squares.forEach(x => x.addEventListener('click', handleClick));
 }
 
 function handleClick(square) {
@@ -72,6 +74,8 @@ function gameOver(gameWon) {
     document.getElementById(index).style.backgroundColor = 
       gameWon.player == humanMark ? "red" : "blue";
   }
+  
+  squares.forEach(x => x.removeEventListener('click', handleClick));
 }
 
 function checkTie(board) {
