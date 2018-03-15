@@ -25,6 +25,7 @@ for(let e of squares) {
 	e.addEventListener('click', handleClick);
 }
 
+computer.addEventListener('click', computerTurn);
 reset.addEventListener('click', resetBoard);
 
 // Functions
@@ -41,10 +42,14 @@ function resetBoard() {
   squares.forEach(x => x.addEventListener('click', handleClick));
 }
 
+function computerTurn() {  
+  turn(bestPlay(), compMark)
+}
+
 function handleClick(square) {
   if (typeof oBoard[square.target.id] == 'number') {
     turn(square.target.id, humanMark)
-    if (!checkWin(oBoard, humanMark) && !checkTie()) {
+    if (!checkWin(oBoard, humanMark) && !checkTie(oBoard)) {
       turn(bestPlay(), compMark)
     }
   }
