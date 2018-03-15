@@ -43,7 +43,11 @@ function resetBoard() {
 }
 
 function computerTurn() {  
-  turn(bestPlay(), compMark)
+  if (typeof oBoard[4] == 'number') {
+    turn(oBoard[4], compMark);
+  } else {
+    turn(bestPlay(), compMark);
+  }
 }
 
 function handleClick(square) {
