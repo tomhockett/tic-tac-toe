@@ -113,19 +113,18 @@ function declareWinner(whoWon) {
 }
 
 function minMax(nBoard, player) {
-  let availSpots = emptySquares(nBoard);
-  console.log(availSpots)
+  let availSpots = emptySquares();
 
   if (checkWin(nBoard, humanMark)) {
-    return {score: -10}
-  } else if (nBoard, compMark) {
-    return {score: 10}
+    return {score: -10};
+  } else if (checkWin(nBoard, compMark)) {
+    return {score: 10};
   } else if (availSpots.length === 0) {
-    return {score: 0}
+    return {score: 0};
   }
 
   let moves = [];
-  for (let i of availSpots) {
+  for (var i = 0; i < availSpots.length; i++) {
     let move = {};
     move.index = nBoard[availSpots[i]]
     nBoard[availSpots[i]] = player;
@@ -146,7 +145,7 @@ function minMax(nBoard, player) {
   let bestMove;
   if (player === compMark) {
     let bestScore = -10000;
-    for (i of moves) {
+    for(var i = 0; i < moves.length; i++) {
       if (moves[i].score > bestScore) {
         bestScore = moves[i].score;
         bestMove = i;
@@ -154,7 +153,7 @@ function minMax(nBoard, player) {
     }
   } else {
     let bestScore = 10000;
-    for (i of moves) {
+    for(var i = 0; i < moves.length; i++) {
       if (moves[i].score < bestScore) {
         bestScore = moves[i].score;
         bestMove = i;
