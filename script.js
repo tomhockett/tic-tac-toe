@@ -105,9 +105,61 @@ function emptySquares() {
 }
 
 function bestPlay() {
-  return emptySquares()[0]
+  return minMax(oBoard, compMark).index;
 }
 
 function declareWinner(whoWon) {
   console.log(whoWon)
+}
+
+function minMax(nBoard, player) {
+  let availSpots = emptySquares(nBoard);
+
+  if (checkWin(nBoard, player)) {
+    return {score: -10}
+  } else if (nBoard, compMark) {
+    return {score: 10}
+  } else if (availSpots.length === 0) {
+    return {score: 0}
+  }
+
+  let moves = [];
+  for (let i of availSpots) {
+    let move = {};
+    move.index = nBoard[availSpots[i]]
+    nBoard[availSpots[i]] = player;
+
+    if (player == compMark) {
+      let result = minMax(nBoard, humanMark);
+      move.score = result.score;
+    } else {
+      let result = minMax(nBoard, compMark);
+      move.score = result.score;
+    }
+
+    nBoard[availSpots[i]] = move.index;
+
+    moves.push(move);
+  }
+
+  let bestMove;
+  if (player === compMark) {
+    let bestScore = -10000;
+    for (i of moves) {
+      if (moves[i].score > bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    }
+  } else {
+    let bestScore = 10000;
+    for (i of moves) {
+      if (moves[i].score < bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    }
+  }
+
+  return moves[bestMove];
 }
