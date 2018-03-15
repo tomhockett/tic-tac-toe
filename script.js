@@ -114,6 +114,7 @@ function declareWinner(whoWon) {
 
 function minMax(nBoard, player) {
   let availSpots = emptySquares(nBoard);
+  console.log(availSpots)
 
   if (checkWin(nBoard, player)) {
     return {score: -10}
