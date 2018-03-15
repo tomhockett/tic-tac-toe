@@ -116,7 +116,7 @@ function minMax(nBoard, player) {
   let availSpots = emptySquares(nBoard);
   console.log(availSpots)
 
-  if (checkWin(nBoard, player)) {
+  if (checkWin(nBoard, humanMark)) {
     return {score: -10}
   } else if (nBoard, compMark) {
     return {score: 10}
