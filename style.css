@@ -10,7 +10,7 @@ html {
   /* A system font stack so things load nice and quick! */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-weight: 900;
+  font-weight: 700;
   font-size: 10px;
   color: var(--black);
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.07);
@@ -32,7 +32,6 @@ body {
   background-size: 340px, auto;
   min-height: calc(100vh - 100px);
   margin: 50px;
-  /* background: white; */
   background-position: fixed;
   letter-spacing: -1px;
 }
@@ -54,17 +53,15 @@ h6 {
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: 100px 100px 100px 50px;
-  grid-gap: 10px;
+  grid-gap: 7px;
 }
 
-/* Each item in our grid will contain numbers */
 .tile {
-  /* We center the contents of these items. You can also do this with flexbox too! */
   display: grid;
   justify-content: center;
   align-items: center;
   border: 5px solid rgba(0, 0, 0, 0.03);
-  border-radius: 3px;
+  border-radius: 10px;
   font-size: 70px;
   background-color: var(--white); /* best colour */
   cursor: pointer;

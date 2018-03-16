@@ -3,8 +3,8 @@ const squares = document.querySelectorAll('.square');
 const computer = document.querySelector('.computer');
 const reset = document.querySelector('.reset');
 
-const humanMark = 'X';
-const compMark = 'O';
+const humPlayer = 'X';
+const compPlayer = 'O';
 
 const winMatrix = [
   [0, 1, 2],
@@ -44,17 +44,17 @@ function resetBoard() {
 
 function computerTurn() {  
   if (typeof oBoard[4] == 'number') {
-    turn(oBoard[4], compMark);
+    turn(oBoard[4], compPlayer);
   } else {
-    turn(bestPlay(), compMark);
+    turn(bestPlay(), compPlayer);
   }
 }
 
 function handleClick(square) {
   if (typeof oBoard[square.target.id] == 'number') {
-    turn(square.target.id, humanMark)
-    if (!checkWin(oBoard, humanMark) && !checkTie(oBoard)) {
-      turn(bestPlay(), compMark)
+    turn(square.target.id, humPlayer)
+    if (!checkWin(oBoard, humPlayer) && !checkTie(oBoard)) {
+      turn(bestPlay(), compPlayer)
     }
   }
 }
@@ -85,9 +85,9 @@ function checkWin(board, player) {
 function gameOver(gameWon) {
   for (let index of winMatrix[gameWon.index]) {
     document.getElementById(index).style.backgroundColor = 
-      gameWon.player == humanMark ? "red" : "blue";
+      gameWon.player == humPlayer ? "red" : "blue";
   }
-  declareWinner(gameWon.player == humanMark ? "You Win!" : "You lose!")
+  declareWinner(gameWon.player == humPlayer ? "You Win!" : "You lose!")
   
   squares.forEach(x => x.removeEventListener('click', handleClick));
 }
@@ -95,7 +95,7 @@ function gameOver(gameWon) {
 function checkTie(board) {
   if(emptySquares().length == 0) {
     for(let i of squares) {
-      i.style.backgroundColor = 'green';
+      i.style.backgroundColor = 'yellow';
       i.removeEventListener('click', handleClick)
     }
     declareWinner("It's a tie!")
@@ -109,7 +109,7 @@ function emptySquares() {
 }
 
 function bestPlay() {
-  return minMax(oBoard, compMark).index;
+  return minMax(oBoard, compPlayer).index;
 }
 
 function declareWinner(whoWon) {
@@ -119,9 +119,9 @@ function declareWinner(whoWon) {
 function minMax(nBoard, player) {
   let availSpots = emptySquares();
 
-  if (checkWin(nBoard, humanMark)) {
+  if (checkWin(nBoard, humPlayer)) {
     return {score: -10};
-  } else if (checkWin(nBoard, compMark)) {
+  } else if (checkWin(nBoard, compPlayer)) {
     return {score: 10};
   } else if (availSpots.length === 0) {
     return {score: 0};
@@ -133,11 +133,11 @@ function minMax(nBoard, player) {
     move.index = nBoard[availSpots[i]]
     nBoard[availSpots[i]] = player;
 
-    if (player == compMark) {
-      let result = minMax(nBoard, humanMark);
+    if (player == compPlayer) {
+      let result = minMax(nBoard, humPlayer);
       move.score = result.score;
     } else {
-      let result = minMax(nBoard, compMark);
+      let result = minMax(nBoard, compPlayer);
       move.score = result.score;
     }
 
@@ -147,7 +147,7 @@ function minMax(nBoard, player) {
   }
 
   let bestMove;
-  if (player === compMark) {
+  if (player === compPlayer) {
     let bestScore = -10000;
     for(var i = 0; i < moves.length; i++) {
       if (moves[i].score > bestScore) {
