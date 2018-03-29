@@ -67,6 +67,7 @@ function turn(squareId, player) {
   document.getElementById(squareId).innerText = player;
   let gameWon = checkWin(oBoard, player);
   if (gameWon) gameOver(gameWon);
+  checkTie(oBoard);
 }
 
 function checkWin(board, player) {
