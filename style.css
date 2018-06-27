@@ -33,7 +33,6 @@ body {
   min-height: calc(100vh - 100px);
   margin: 50px;
   background-position: fixed;
-  letter-spacing: -1px;
 }
 
 h1,

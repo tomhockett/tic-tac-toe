@@ -60,6 +60,7 @@ function handleClick(square) {
 }
 
 function turn(squareId, player) {
+<<<<<<< HEAD
   computer.style.display = 'none'
   reset.style.gridColumn = 'span 3'
   oBoard[squareId] = player
@@ -67,6 +68,16 @@ function turn(squareId, player) {
   document.getElementById(squareId).innerText = player
   let gameWon = checkWin(oBoard, player)
   if (gameWon) gameOver(gameWon)
+=======
+  computer.style.display = 'none';
+  reset.style.gridColumn = 'span 3';
+  oBoard[squareId] = player;
+  
+  document.getElementById(squareId).innerText = player;
+  let gameWon = checkWin(oBoard, player);
+  if (gameWon) gameOver(gameWon);
+  checkTie(oBoard);
+>>>>>>> 80c415639d45cc6d2ffef90f87e6c79e1a7e69d2
 }
 
 function checkWin(board, player) {
