@@ -1,10 +1,10 @@
 // Variable declarations and assignment
-const squares = document.querySelectorAll('.square');
-const computer = document.querySelector('.computer');
-const reset = document.querySelector('.reset');
+const squares = document.querySelectorAll('.square')
+const computer = document.querySelector('.computer')
+const reset = document.querySelector('.reset')
 
-const humPlayer = 'X';
-const compPlayer = 'O';
+const humPlayer = 'X'
+const compPlayer = 'O'
 
 const winMatrix = [
   [0, 1, 2],
@@ -15,38 +15,38 @@ const winMatrix = [
   [2, 5, 8],
   [0, 4, 8],
   [2, 4, 6]
-];
+]
 
 // Set up the game board in memory
-var oBoard = Array.from(Array(9).keys());
+var oBoard = Array.from(Array(9).keys())
 
 // Event listeners
-for(let e of squares) {
-	e.addEventListener('click', handleClick);
+for (let e of squares) {
+  e.addEventListener('click', handleClick)
 }
 
-computer.addEventListener('click', computerTurn);
-reset.addEventListener('click', resetBoard);
+computer.addEventListener('click', computerTurn)
+reset.addEventListener('click', resetBoard)
 
 // Functions
 function resetBoard() {
-  reset.style.gridColumn = '';
-  computer.style.display = '';
-  oBoard = Array.from(Array(9).keys());
-  
-  for(let e of squares) {
-    e.innerText = '';
-    e.style.backgroundColor = 'white';
+  reset.style.gridColumn = ''
+  computer.style.display = ''
+  oBoard = Array.from(Array(9).keys())
+
+  for (let e of squares) {
+    e.innerText = ''
+    e.style.backgroundColor = 'white'
   }
 
-  squares.forEach(x => x.addEventListener('click', handleClick));
+  squares.forEach(x => x.addEventListener('click', handleClick))
 }
 
-function computerTurn() {  
+function computerTurn() {
   if (typeof oBoard[4] == 'number') {
-    turn(oBoard[4], compPlayer);
+    turn(oBoard[4], compPlayer)
   } else {
-    turn(bestPlay(), compPlayer);
+    turn(bestPlay(), compPlayer)
   }
 }
 
@@ -60,48 +60,49 @@ function handleClick(square) {
 }
 
 function turn(squareId, player) {
-  computer.style.display = 'none';
-  reset.style.gridColumn = 'span 3';
-  oBoard[squareId] = player;
-  
-  document.getElementById(squareId).innerText = player;
-  let gameWon = checkWin(oBoard, player);
-  if (gameWon) gameOver(gameWon);
+  computer.style.display = 'none'
+  reset.style.gridColumn = 'span 3'
+  oBoard[squareId] = player
+
+  document.getElementById(squareId).innerText = player
+  let gameWon = checkWin(oBoard, player)
+  if (gameWon) gameOver(gameWon)
 }
 
 function checkWin(board, player) {
-  let plays = board.reduce((a, e, i) => 
-    (e === player) ? a.concat(i) : a, []);
-  let gameWon = null;
+  let plays = board.reduce((a, e, i) => (e === player ? a.concat(i) : a), [])
+  let gameWon = null
   for (let [index, win] of winMatrix.entries()) {
     if (win.every(elm => plays.indexOf(elm) > -1)) {
-      gameWon = {index: index, player: player};
-      break;
+      gameWon = { index: index, player: player }
+      break
     }
   }
-  return gameWon;
+  return gameWon
 }
 
 function gameOver(gameWon) {
   for (let index of winMatrix[gameWon.index]) {
-    document.getElementById(index).style.backgroundColor = 
-      gameWon.player == humPlayer ? "red" : "blue";
+    document.getElementById(index).style.backgroundColor = gameWon.player ==
+      humPlayer
+      ? 'red'
+      : 'blue'
   }
-  declareWinner(gameWon.player == humPlayer ? "You Win!" : "You lose!")
-  
-  squares.forEach(x => x.removeEventListener('click', handleClick));
+  declareWinner(gameWon.player == humPlayer ? 'You Win!' : 'You lose!')
+
+  squares.forEach(x => x.removeEventListener('click', handleClick))
 }
 
 function checkTie(board) {
-  if(emptySquares().length == 0) {
-    for(let i of squares) {
-      i.style.backgroundColor = 'yellow';
+  if (emptySquares().length == 0) {
+    for (let i of squares) {
+      i.style.backgroundColor = 'yellow'
       i.removeEventListener('click', handleClick)
     }
-    declareWinner("It's a tie!")
-    return true;
+    declareWinner('It\'s a tie!')
+    return true
   }
-  return false;
+  return false
 }
 
 function emptySquares() {
@@ -109,7 +110,7 @@ function emptySquares() {
 }
 
 function bestPlay() {
-  return minMax(oBoard, compPlayer).index;
+  return minMax(oBoard, compPlayer).index
 }
 
 function declareWinner(whoWon) {
@@ -117,53 +118,53 @@ function declareWinner(whoWon) {
 }
 
 function minMax(nBoard, player) {
-  let availSpots = emptySquares();
+  let availSpots = emptySquares()
 
   if (checkWin(nBoard, humPlayer)) {
-    return {score: -10};
+    return { score: -10 }
   } else if (checkWin(nBoard, compPlayer)) {
-    return {score: 10};
+    return { score: 10 }
   } else if (availSpots.length === 0) {
-    return {score: 0};
+    return { score: 0 }
   }
 
-  let moves = [];
+  let moves = []
   for (var i = 0; i < availSpots.length; i++) {
-    let move = {};
+    let move = {}
     move.index = nBoard[availSpots[i]]
-    nBoard[availSpots[i]] = player;
+    nBoard[availSpots[i]] = player
 
     if (player == compPlayer) {
-      let result = minMax(nBoard, humPlayer);
-      move.score = result.score;
+      let result = minMax(nBoard, humPlayer)
+      move.score = result.score
     } else {
-      let result = minMax(nBoard, compPlayer);
-      move.score = result.score;
+      let result = minMax(nBoard, compPlayer)
+      move.score = result.score
     }
 
-    nBoard[availSpots[i]] = move.index;
+    nBoard[availSpots[i]] = move.index
 
-    moves.push(move);
+    moves.push(move)
   }
 
-  let bestMove;
+  let bestMove
   if (player === compPlayer) {
-    let bestScore = -10000;
-    for(var i = 0; i < moves.length; i++) {
+    let bestScore = -10000
+    for (var i = 0; i < moves.length; i++) {
       if (moves[i].score > bestScore) {
-        bestScore = moves[i].score;
-        bestMove = i;
+        bestScore = moves[i].score
+        bestMove = i
       }
     }
   } else {
-    let bestScore = 10000;
-    for(var i = 0; i < moves.length; i++) {
+    let bestScore = 10000
+    for (var i = 0; i < moves.length; i++) {
       if (moves[i].score < bestScore) {
-        bestScore = moves[i].score;
-        bestMove = i;
+        bestScore = moves[i].score
+        bestMove = i
       }
     }
   }
 
-  return moves[bestMove];
+  return moves[bestMove]
 }
